@@ -1,0 +1,7 @@
+.mainpage-container {
+    display: flex;
+    justify-content: center;
+    padding: 45px 0px;
+    align-items: center;
+    gap : 200px;
+}

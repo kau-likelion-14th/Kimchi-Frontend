@@ -1,6 +1,5 @@
 .footer {
   position: fixed;
-  bottom: 0;
   left: 0;
   width: 100%;
   min-height: 250px;
@@ -36,7 +35,6 @@
 }
 
 .footer-info {
-  display: flex;
   flex-direction: column;
   gap: 26px;
 }

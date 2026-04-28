@@ -1,0 +1,48 @@
+.footer {
+  left: 0;
+  font-family: "Paperlogy", sans-serif;
+  width: 100%;
+  min-height: 250px;
+  background-color: #d6ead6;
+  padding: 20px 70px 30px 70px;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 60px;
+}
+
+.footer-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.footer-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #111;
+}
+
+.footer-description {
+  font-size: 18px;
+  color: #111;
+  margin: 0 0 70px 0;
+}
+
+.footer-info {
+  flex-direction: column;
+  gap: 26px;
+}
+
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  font-size: 16px;
+  color: #6b6b6b;
+}

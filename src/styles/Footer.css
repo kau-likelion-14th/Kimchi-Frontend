@@ -1,6 +1,6 @@
 .footer {
-  position: fixed;
   left: 0;
+  font-family: "Paperlogy", sans-serif;
   width: 100%;
   min-height: 250px;
   background-color: #d6ead6;

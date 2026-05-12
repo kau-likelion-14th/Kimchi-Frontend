@@ -2,14 +2,14 @@ import React from "react";
 import Profile from "./Profile";
 import Status from "./Status";
 import "../../styles/MyPage.css";
-
+import Statistics from "./Status";
 
 const MyPage = () => {
   return (
-    <main className="mypage">
+    <div className="mypage-container">
       <Profile />
-      <Status />
-    </main>
+      <Statistics />
+    </div>
   );
 };
 

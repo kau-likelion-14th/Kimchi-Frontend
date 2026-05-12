@@ -1,38 +1,39 @@
 import "../styles/Header.css";
 import logo from "../assets/image/LTE.png";
 import LogoutIcon from "../assets/icon/logout.png"
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-function Header(){
-    return(
+function Header() {
+    const navigate = useNavigate();
+
+    return (
         <header className="header">
             {/*로고*/}
             <div className="header-left">
-                <img src = {logo} alt = "LTE 로고" className="header-logo"/>
-                <span className="header-title">Lion To-do Everyday</span>
+                <img src={logo} alt="LTE 로고" className="header-logo"/>
+                <span className="header-title">Lion To-do Evryday</span>
             </div>
 
-
             {/*메뉴*/}
-            <nav className="header-nav">
-                <NavLink to="/" className = {({ isActive }) => isActive ? "nav-item active" : "nav-item" }>
+            <nav className="header-nav">  
+                <NavLink to="/" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
                     홈
                 </NavLink>
 
-                <NavLink to="/friends" className = {({ isActive }) => isActive ? "nav-item active" : "nav-item" }>
+                <NavLink to="/friends" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
                     친구
                 </NavLink>
 
-                <NavLink to="/mypage" className = {({ isActive }) => isActive ? "nav-item active" : "nav-item" }>
+                <NavLink to="/mypage" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
                     마이페이지
                 </NavLink>
             </nav>
-    
-        {/*사용자정보*/}
-        <div className="header-right">
-            <span className="user-name">김지현님</span>
-            <img src = {LogoutIcon} alt = "로그아웃" className="logout-icon"/>
-        </div>
+            
+            {/*사용자 정보*/}
+            <div className="header-right">
+                <span className="user-name">김지현님</span>
+                <img src={LogoutIcon} alt="로그아웃" className="logout-icon" onClick={() => navigate("/login")}/>
+            </div>
 
         </header>
     );

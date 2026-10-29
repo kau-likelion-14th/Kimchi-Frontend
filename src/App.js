@@ -8,19 +8,22 @@ import Footer from "./components/Footer";
 import React from 'react';
 import LoginPage from './pages/LoginPage/LoginPage';
 import FriendDetailPage from './pages/FriendPage/FriendDetailPage';
+import ProtectedRoute from "./routes/ProtectRoute.js";
 
 
 function App() {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
+  const isLoginPage = location.pathname.startsWith('/login');
 
   return (
     <div>
       {!isLoginPage && <Header />}
 
       <Routes>
-        <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/login/oauth2/code/kakao" element={<LoginPage />} />
+        <Route element = {<ProtectedRoute />} /> 
+        <Route path="/" element={<MainPage />} />
         <Route path="/friends" element={<FriendPage />} />
         <Route path="/friends/:id" element={<FriendDetailPage />} />
       </Routes>

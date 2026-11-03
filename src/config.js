@@ -13,6 +13,7 @@ const config = {
         DELETE: "/api/follow",
         SEARCH: "/api/follow/search",
         CREATE: "/api/follow",
+        LIST: "/api/follow",
     },
 }
 

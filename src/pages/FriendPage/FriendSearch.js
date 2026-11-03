@@ -6,6 +6,9 @@ import config from "../../config";
 import { toFriendModel } from "./friendModel";
 import searchIcon from "../../assets/icon/search.png";
 
+// 검색어가 없을 때 미리 보여줄 사용자 수
+const SUGGEST_SIZE = 1;
+
 // 검색 API 요청 (GET /api/follow/search?nickname=&page=&size=)
 function requestSearch(nickname, page, signal) {
   return api.get(config.FOLLOW.SEARCH, {
@@ -45,12 +48,30 @@ function FriendSearch({
 
   // 검색어/페이지가 바뀌면 300ms 뒤 서버에 검색 요청
   useEffect(() => {
+    // 검색어가 없으면 팔로우 가능한 사용자를 미리 보여줌 (실패해도 조용히 안내 문구로 대체)
     if (!nickname) {
-      setResults([]);
+      let alive = true;
       setTotalPages(0);
       setError("");
       setLoading(false);
-      return;
+
+      api
+        .get(config.FOLLOW.LIST, { params: { page: 0, size: SUGGEST_SIZE } })
+        .then(({ data }) => {
+          const list = Array.isArray(data?.result?.content)
+            ? data.result.content
+            : Array.isArray(data?.result)
+            ? data.result
+            : [];
+          if (alive) setResults(list.slice(0, SUGGEST_SIZE).map(toFriendModel));
+        })
+        .catch(() => {
+          if (alive) setResults([]);
+        });
+
+      return () => {
+        alive = false;
+      };
     }
 
     let active = true;
@@ -137,7 +158,7 @@ function FriendSearch({
 
       {followError && <p role="alert">{followError}</p>}
 
-      {!nickname ? (
+      {!nickname && results.length === 0 ? (
         <div className="friend-search__empty">검색할 닉네임을 입력해 주세요.</div>
       ) : loading ? (
         <div className="friend-search__empty" role="status">검색 중...</div>

@@ -2,11 +2,13 @@
   "name": "test",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://lte-dev-env.eba-7nebbn3h.ap-northeast-2.elasticbeanstalk.com/",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.21.0",
     "react": "^19.2.4",
     "react-calendar": "^6.0.0",
     "react-dom": "^19.2.4",

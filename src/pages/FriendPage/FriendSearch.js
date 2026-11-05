@@ -56,7 +56,7 @@ function FriendSearch({
       setLoading(false);
 
       api
-        .get(config.FOLLOW.LIST, { params: { page: 0, size: SUGGEST_SIZE } })
+        .get(config.FOLLOW.AVAILABLE, { params: { page: 0, size: SUGGEST_SIZE } })
         .then(({ data }) => {
           const list = Array.isArray(data?.result?.content)
             ? data.result.content

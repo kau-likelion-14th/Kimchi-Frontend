@@ -9,11 +9,14 @@ const config = {
     },
 
     FOLLOW: {
+        PROFILE: (id) => `/api/follow/${encodeURIComponent(id)}`,
+        TODOS: (id) => `/api/follow/${encodeURIComponent(id)}/todos`,
+        CALENDAR: (id) => `/api/follow/${encodeURIComponent(id)}/calendar`,
+        AVAILABLE: "/api/follow",
         FOLLOWINGS: "/api/follow/followings",
         DELETE: "/api/follow",
         SEARCH: "/api/follow/search",
         CREATE: "/api/follow",
-        LIST: "/api/follow",
     },
 }
 

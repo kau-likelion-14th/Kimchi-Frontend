@@ -48,18 +48,44 @@ calendar-container .react-calendar__navigation button {
 }
 
 .calendar-container .react-calendar__tile {
+    position: relative;
     height: 80px;
     border-radius: 15px;
+    /* 버튼은 내용을 세로 가운데 정렬하므로, 날짜 숫자를 위쪽에 고정 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10px;
 }
 
+/* 날짜 숫자 아래 회색 박스 */
 .calendar-container .react-calendar__tile::after {
     content: "";
-    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
     width: 34px;
     height: 34px;
-    margin: 10px auto 0;
     background: #f1f1f1;
     border-radius: 8px;
+}
+
+/* 남은 개수 / ★ 를 회색 박스 안 가운데에 표시 */
+.calendar-container .tile-meta {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    z-index: 1;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #333333;
 }
 
 .calendar-container .react-calendar__month-view__days__day--neighboringMonth abbr {
@@ -70,7 +96,7 @@ calendar-container .react-calendar__navigation button {
     background: transparent;
 }
 
-.calendar-container .react-calendar__tile—now::after {
+.calendar-container .react-calendar__tile--now::after {
     background: #f1f1f1;
     border: 2px solid #0a84ff;
 }

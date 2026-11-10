@@ -13,7 +13,8 @@ const toDateKey = (date) => {
 export default function CustomCalendar({
     initialDate = new Date(),
     onDateChange,
-    todosByDate = {},
+    onMonthChange,
+    remainingByDate = {}, // 서버에서 받은 { "YYYY-MM-DD": { hasTodo, remaining } }
 }) {
     const [selectedDate, setSelectedDate] = useState(initialDate);
 
@@ -23,19 +24,19 @@ export default function CustomCalendar({
         onDateChange?.(next);
     };
 
+    // 데이터가 없는 날짜(표시 X)와 remaining이 0인 날짜(★)를 구분
     const getDayMeta = (date) => {
-        const key = toDateKey(date);
-        const list = todosByDate[key] ?? [];
-        if (list.length === 0) return { hasTodos: false, remaining: 0, allDone: false };
-
-        const remaining = list.filter((t) => !t.completed).length;
-        return { hasTodos: true, remaining, allDone: remaining === 0 };
+        const day = remainingByDate[toDateKey(date)];
+        const hasTodos = day?.hasTodo === true;
+        const remaining = day?.remaining ?? 0;
+        return { hasTodos, remaining, allDone: hasTodos && remaining === 0 };
     };
 
     return (
         <div className="calendar-container">
             <Calendar
                 onChange={handledDateChange}
+                onActiveStartDateChange={({ activeStartDate }) => onMonthChange?.(activeStartDate)}
                 value={selectedDate}
                 calendarType='gregory'
                 view='month'

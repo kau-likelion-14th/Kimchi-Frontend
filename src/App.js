@@ -26,6 +26,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/friends" element={<FriendPage />} />
         <Route path="/friends/:id" element={<FriendDetailPage />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
 
       {!isLoginPage && <Footer />}

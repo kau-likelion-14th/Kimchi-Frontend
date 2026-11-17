@@ -37,9 +37,19 @@ const config = {
         GET : "/api/profile",
         PUT :"/api/profile",
         DELETE:"/api/profile",
-        INTRO:"/api/profile",
+        INTRO:"/api/profile/intro",
     },
-}
+
+    STATISTICS: {
+        GET: "/api/statistic",
+    },
+
+    YOUTUBE: {
+        SEARCH: "/api/youtube/search",
+        SAVE: "/api/youtube/save",
+        ME: "/api/youtube/me",
+    },
+};
 
 export default config;
 

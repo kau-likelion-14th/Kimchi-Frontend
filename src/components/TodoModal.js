@@ -8,10 +8,11 @@ const TodoModal = ({
     onSave,
     onDelete,
     initialTodo,
+    categories = [], // 서버에서 받은 카테고리 이름 목록
 }) => {
     const isEditMode = Boolean(initialTodo);
 
-    const [category, setCategory] = useState("공부");
+    const [category, setCategory] = useState("");
     const [text, setText] = useState("");
     const [routine, setRoutine] = useState(null);
 
@@ -20,15 +21,15 @@ const TodoModal = ({
     useEffect(() => {
         if (!isOpen) return;
 
-        setCategory(initialTodo?.category || "공부");
+        setCategory(initialTodo?.category || categories[0] || "");
         setText(initialTodo?.text || "");
         setRoutine(initialTodo?.routine || null);
-    }, [isOpen, initialTodo]);
+    }, [isOpen, initialTodo, categories]);
 
     if (!isOpen) return null;
 
     const handleSave = () => {
-        if (!text.trim()) return;
+        if (!text.trim() || !category) return;
 
         onSave({
             text: text.trim(),
@@ -50,7 +51,8 @@ const TodoModal = ({
                 <div className="modal-section">
                     <div className="modal-label">카테고리</div>
                     <div className="modal-categories">
-                        {["공부", "운동", "동아리"].map((cat) => (
+                        {categories.length === 0 && <span>카테고리를 불러오는 중...</span>}
+                        {categories.map((cat) => (
                             <label key={cat}>
                                 <input
                                     type="radio"
@@ -98,9 +100,9 @@ const TodoModal = ({
                         삭제
                     </button>
                     <button
-                        className={`rightbutton ${text.trim() ? "" : "disabled"}`}
+                        className={`rightbutton ${text.trim() && category ? "" : "disabled"}`}
                         onClick={handleSave}
-                        disabled={!text.trim()}
+                        disabled={!text.trim() || !category}
                     >
                         저장
                     </button>

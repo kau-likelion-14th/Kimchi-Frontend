@@ -25,6 +25,10 @@ const config = {
 
     TODOS: {
         LIST: "/api/todos",
+        CREATE: "/api/todos",
+        UPDATE: (todoId) => `/api/todos/${encodeURIComponent(todoId)}`,
+        DELETE: (todoId, date) =>
+            `/api/todos/${encodeURIComponent(todoId)}/dates/${encodeURIComponent(date)}`,
         TOGGLE_COMPLETE: (todoId, date) =>
             `/api/todos/${encodeURIComponent(todoId)}/dates/${encodeURIComponent(date)}/complete`,
     },

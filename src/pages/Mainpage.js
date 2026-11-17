@@ -89,7 +89,6 @@ const MainPage = () => {
       <Todo
         selectedDate={selectedDate}
         todos={todos}
-        setTodos={setTodos}
         onCompleteChanged={() => setRefreshKey((prev) => prev + 1)}
       />
     </div>

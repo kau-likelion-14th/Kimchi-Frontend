@@ -1,10 +1,8 @@
 import "../styles/Todo.css";
 import TodoModal from "./TodoModal";
 import React, { useEffect, useMemo, useState } from "react";
-import { get, patch } from "../Api";
+import { get, post, put, del, patch } from "../Api";
 import config from "../config";
-
-const uid = () => Date.now() + Math.random();
 
 // 카테고리별 색상 (서버 응답에는 색상이 없으므로 이름 기준으로 매핑)
 const CATEGORY_COLORS = {
@@ -27,7 +25,7 @@ const toDateKey = (date) => {
     return `${y}-${m}-${d}`;
 };
 
-const Todo = ({ selectedDate, todos = [], setTodos, onCompleteChanged }) => {
+const Todo = ({ selectedDate, todos = [], onCompleteChanged }) => {
     const dateKey = toDateKey(selectedDate);
 
     const [serverCategories, setServerCategories] = useState([]); // 서버에서 받은 카테고리 목록
@@ -96,27 +94,40 @@ const Todo = ({ selectedDate, todos = [], setTodos, onCompleteChanged }) => {
         }
     };
 
-    // 추가/수정/삭제는 이번 과제 범위가 아니므로 로컬 상태만 변경
-    const handledSaveTodo = ({ text, category }) => {
-        if (editingTodo) {
-            setTodos((prev) =>
-                prev.map((t) =>
-                    t.id === editingTodo.id ? { ...t, text, category } : t
-                )
-            );
-        } else {
-            setTodos((prev) => [
-                ...prev,
-                { id: uid(), text, category, completed: false },
-            ]);
+    // 저장 버튼: 수정 모드면 PUT, 새로 만들기면 POST → 성공하면 Todo 목록과 캘린더 재조회
+    const handledSaveTodo = async ({ text, category }) => {
+        const body = {
+            categoryName: category,
+            description: text,
+            routineEnabled: false, // 루틴은 아직 서버 형식(week 단일값)과 맞지 않아 일반 Todo로만 저장
+        };
+
+        try {
+            if (editingTodo) {
+                await put(config.TODOS.UPDATE(editingTodo.id), body);
+            } else {
+                await post(config.TODOS.CREATE, body, { params: { date: dateKey } });
+            }
+            setIsModalOpen(false);
+            onCompleteChanged?.();
+        } catch (error) {
+            console.error("Todo 저장 실패:", error);
+            alert(error.response?.data?.message || "할 일을 저장하지 못했습니다.");
         }
-        setIsModalOpen(false);
     };
 
-    const handledDeleteTodo = () => {
+    // 삭제 버튼: 선택한 날짜 기준으로 삭제 → 성공하면 재조회
+    const handledDeleteTodo = async () => {
         if (!editingTodo) return;
-        setTodos((prev) => prev.filter((t) => t.id !== editingTodo.id));
-        setIsModalOpen(false);
+
+        try {
+            await del(config.TODOS.DELETE(editingTodo.id, dateKey));
+            setIsModalOpen(false);
+            onCompleteChanged?.();
+        } catch (error) {
+            console.error("Todo 삭제 실패:", error);
+            alert(error.response?.data?.message || "할 일을 삭제하지 못했습니다.");
+        }
     };
 
     return (

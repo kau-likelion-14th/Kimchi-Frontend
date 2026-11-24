@@ -22,11 +22,12 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/oauth2/code/kakao" element={<LoginPage />} />
-        <Route element = {<ProtectedRoute />} /> 
-        <Route path="/" element={<MainPage />} />
-        <Route path="/friends" element={<FriendPage />} />
-        <Route path="/friends/:id" element={<FriendDetailPage />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/friends" element={<FriendPage />} />
+          <Route path="/friends/:id" element={<FriendDetailPage />} />
+          <Route path="/mypage" element={<MyPage />} />
+        </Route>
       </Routes>
 
       {!isLoginPage && <Footer />}

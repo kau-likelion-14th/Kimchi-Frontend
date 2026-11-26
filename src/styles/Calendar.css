@@ -4,20 +4,19 @@
     width: 440px;
 }
 
-.calendar-container
-.react-calendar_navigation
-.react-calendar_navigation_label{
+.calendar-container .react-calendar__navigation__label {
     font-size: 28px;
     font-weight: bold;
     font-family: "Paperlogy", sans-serif;
     color: #333333;
 }
 
-.calendar-container .react-calendar_navigation{
+.calendar-container .react-calendar__navigation {
     margin-bottom: 18px;
 }
 
-calendar-container .react-calendar__navigation button {
+.calendar-container .react-calendar__navigation button {
+    font-family: "Paperlogy", sans-serif;
     font-size: 24px;
     font-weight: 900;
     color: #333333;
@@ -107,4 +106,28 @@ calendar-container .react-calendar__navigation button {
 
 .calendar-container .react-calendar__month-view__days__day:nth-child(7n) abbr {
     color: #0a84ff;
+}
+
+/* 네비게이션 / 타일 hover·focus 시 기본 회색 배경 제거 */
+.calendar-container .react-calendar__navigation button:enabled:hover,
+.calendar-container .react-calendar__navigation button:enabled:focus,
+.calendar-container .react-calendar__tile:enabled:hover,
+.calendar-container .react-calendar__tile:enabled:focus {
+    background: transparent;
+}
+
+/* 선택한 날짜: 기본 파란 배경 대신 회색 박스를 파랗게 채움 */
+.calendar-container .react-calendar__tile--active,
+.calendar-container .react-calendar__tile--active:enabled:hover,
+.calendar-container .react-calendar__tile--active:enabled:focus {
+    background: transparent;
+    color: inherit;
+}
+
+.calendar-container .react-calendar__tile--active::after {
+    background: #0a84ff;
+}
+
+.calendar-container .react-calendar__tile--active .tile-meta {
+    color: #ffffff;
 }

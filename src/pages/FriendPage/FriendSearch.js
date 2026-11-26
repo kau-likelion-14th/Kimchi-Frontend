@@ -127,9 +127,9 @@ function FriendSearch({
     }
   };
 
-  // goFriendDetail 한 명을 클릭하면 상세 페이지로 이동
+  // 팔로우 중인 유저만 상세 페이지로 이동 (GET /api/follow/{userId})
   const goFriendDetail = (friend) => {
-    navigate("/friends/detail", { state: { friend } });
+    navigate(`/friends/${friend.id}`, { state: { friend } });
   };
 
   return (
@@ -177,17 +177,20 @@ function FriendSearch({
             const isFollowing = followingList.some((f) => f.id === user.id);
             const isPending = followingId === user.id;
 
+            const clickableProps = isFollowing
+              ? {
+                  role: "button",
+                  tabIndex: 0,
+                  onClick: () => goFriendDetail(user),
+                  onKeyDown: (e) => {
+                    if (e.key === "Enter" || e.key === " ") goFriendDetail(user);
+                  },
+                }
+              : {};
+
             return (
               <li key={user.id} className="friend-search__item">
-                <div
-                  className="friend-search__left"
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => goFriendDetail(user)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") goFriendDetail(user);
-                  }}
-                >
+                <div className="friend-search__left" {...clickableProps}>
                   <div className="friend-avatar" aria-hidden="true">
                     {user.profileImageUrl ? (
                       <img src={user.profileImageUrl} alt="" className="friend-avatar__img" />

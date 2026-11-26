@@ -25,6 +25,12 @@ function useFriendResource(url, params, validate, retry) {
   const query = JSON.stringify(params);
 
   useEffect(() => {
+    // followId(int64)가 아닌 경로면 400이 나므로 요청하지 않음
+    if (!url) {
+      setState({ loading: false, error: "잘못된 친구 주소입니다.", value: null });
+      return;
+    }
+
     let active = true;
     const controller = new AbortController();
 
@@ -94,16 +100,21 @@ function FriendDetailPage() {
   const [retries, setRetries] = useState({profile: 0, todos:0, calendar:0});
   const retry = (key) => setRetries((prev) => ({...prev, [key]: prev[key] + 1}));
 
-  const base = config.FOLLOW.PROFILE(id);
-  const profile = useFriendResource(base, {}, validProfile, retries.profile);
+  const validId = /^\d+$/.test(id ?? "");
+  const profile = useFriendResource(
+    validId ? config.FOLLOW.PROFILE(id) : null,
+    {},
+    validProfile,
+    retries.profile
+  );
   const todoResource = useFriendResource(
-    config.FOLLOW.TODOS(id),
+    validId ? config.FOLLOW.TODOS(id) : null,
     { date: toDateKey(selectedDate) },
     validTodos,
     retries.todos
   );
   const calendar = useFriendResource(
-    config.FOLLOW.CALENDAR(id),
+    validId ? config.FOLLOW.CALENDAR(id) : null,
     {year: viewDate.getFullYear(), month: viewDate.getMonth() + 1},
     validCalendar,
     retries.calendar

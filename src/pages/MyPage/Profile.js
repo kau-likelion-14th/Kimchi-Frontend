@@ -2,8 +2,7 @@ import React,  { useRef, useState, useEffect } from "react";
 import profileImg from "../../assets/image/profile.png";
 import { get, post, put, uploadProfile } from "../../Api";
 import config from "../../config"
-import profileEdit from "../../assets/image/imgedit.png";
-import profilemusic from "../../assets/image/imgedit.png";
+import searchIcon from "../../assets/icon/search.png";
 
 
 const Profile = () => {
@@ -165,12 +164,22 @@ const handleSaveSong = async () => {
                     alt="프로필 이미지" 
                     className="profile-img" 
                 />
-                <img
-                    src={profileEdit}
-                    alt="프로필 수정 아이콘"
+                <button
+                    type="button"
                     className="profile-img-edit"
+                    aria-label="프로필 사진 변경"
                     onClick={handleClickEditIcon}
-                />
+                >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                            d="M4 20h4L18.5 9.5l-4-4L4 16v4ZM14.5 5.5l4 4"
+                            stroke="#333333"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+                </button>
                 <input
                     type="file"
                     ref={fileInputRef}
@@ -222,13 +231,14 @@ const handleSaveSong = async () => {
                             }}
                         />
                     </div>
-                    <img
-                        src={profilemusic}
-                        alt="프로필 노래 수정 아이콘"
-                        className="profile-search-icon"
+                    <button
+                        type="button"
+                        className="profile-search-btn"
+                        aria-label="노래 검색"
                         onClick={handleSearchSong}
-                        style={{cursor: "pointer"}}
-                    />
+                    >
+                        <img src={searchIcon} alt="" className="profile-search-icon" />
+                    </button>
                 </div>
 
                 {showSearchResults && (
